@@ -44,6 +44,7 @@ ALLOWED_HOSTS = ["127.0.0.1",
 # Application definition
 
 INSTALLED_APPS = [
+    # third party apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,8 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'rest_framework',
+    'django_filters',
     
-    #own
+    # own apps
     'profiles',
     'posts',
     'comments',
