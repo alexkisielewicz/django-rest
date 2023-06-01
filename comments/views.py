@@ -6,6 +6,7 @@ from .serializers import CommentSerializer, CommentDetailSerializer
 # use generiv view not to repeat same classes and methods for different api endpoints
 # we dont have to write get method and create replaces post method
 # context is a part of generic request by default
+
 class CommentList(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
