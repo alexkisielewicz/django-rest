@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     
     #own
     'profiles',
+    'posts',
 ]
 
 MIDDLEWARE = [
