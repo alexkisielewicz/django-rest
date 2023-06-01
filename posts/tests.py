@@ -28,4 +28,41 @@ class PostListViewTests(APITestCase):
         # first try to fail! it will fail with 200 - 403 != 200
         # self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    
+    
+class PostDetailViewTests(APITestCase):
+    def setUp(self):
+        alek = User.objects.create_user(username='alek', password='pass')
+        brian = User.objects.create_user(username='brian', password='pass')
+        Post.objects.create(
+            owner=alek, title='a title', content='aleks content'
+        )
+        Post.objects.create(
+            owner=brian, title='another title', content='brians content'
+        )
+
+    def test_can_retrieve_post_using_valid_id(self):
+        response = self.client.get('/posts/1/')
+        self.assertEqual(response.data['title'], 'a title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         
+    def test_can_retrieve_post_using_valid_id(self):
+        response = self.client.get('/posts/1/')
+        self.assertEqual(response.data['title'], 'a title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_cant_retrieve_post_using_invalid_id(self):
+        response = self.client.get('/posts/999/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_user_can_update_own_post(self):
+        self.client.login(username='alek', password='pass')
+        response = self.client.put('/posts/1/', {'title': 'a new title'})
+        post = Post.objects.filter(pk=1).first()
+        self.assertEqual(post.title, 'a new title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_update_another_users_post(self):
+        self.client.login(username='alek', password='pass')
+        response = self.client.put('/posts/2/', {'title': 'a new title'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
