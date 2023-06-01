@@ -9,6 +9,8 @@ class PostSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     like_id = serializers.SerializerMethodField()
+    likes_count = serializers.ReadOnlyField()
+    comments_count = serializers.ReadOnlyField()
     
     # validate is django rest built in feature, after underscore is name of variable from the model Post
     # if we follow naming convention it will be called automatically when we create or update the post
@@ -55,4 +57,6 @@ class PostSerializer(serializers.ModelSerializer):
             'image',
             'image_filter',
             'like_id',
+            'likes_count',
+            'comments_count',
         ]
