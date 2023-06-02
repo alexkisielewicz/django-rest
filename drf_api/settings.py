@@ -65,13 +65,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = [
-    os.environ.get('ALLOWED_HOST'),
-    '127.0.0.1',
-    'localhost',
-    ]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -114,6 +107,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+    'localhost',
 ]
 
 if 'CLIENT_ORIGIN' in os.environ:
