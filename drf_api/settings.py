@@ -109,11 +109,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ALLOWED_HOSTS = [
-    os.environ.get('ALLOWED_HOST'),
-    'localhost',
-]
-
+# in development
+if 'DEV' in os.environ:
+    ALLOWED_HOSTS = [
+        os.environ.get('ALLOWED_HOST'),
+        'localhost'
+    ]
+# in production     
+else:
+    ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST')]
+    
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
@@ -126,8 +131,6 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]
-
-CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf_api.urls'
 
